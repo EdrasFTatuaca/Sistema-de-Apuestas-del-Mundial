@@ -102,14 +102,15 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME", "quiniela"),
+        # os.getenv busca la variable "DB_NAME" en Railway. Si no la encuentra, usa "quiniela" por defecto
+        "NAME": os.getenv("DB_NAME", "quiniela"), 
         "USER": os.getenv("DB_USER", "postgres"),
         "PASSWORD": os.getenv("DB_PASSWORD", "PASSWORD"),
         "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
         "OPTIONS": {
-            "sslmode": os.getenv("DB_SSLMODE", "require"),
-        } if os.getenv("DB_SSLMODE") else {},
+            "sslmode": "require",  # Esto le dice a Django que obligatoriamente encripte la conexión hacia Neon
+        }
     }
 }
 
